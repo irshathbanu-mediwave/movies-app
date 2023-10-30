@@ -4,6 +4,10 @@ import "@picocss/pico";
 import { useEffect, useState } from "react";
 import { deletemovies, getmovies } from "../services/api";
 import Layout from "../components/Layout";
+import { Button } from "rsuite";
+// Default CSS
+import "rsuite/dist/rsuite.min.css";
+// import { CLoadingButton } from '@coreui/react-pro';
 interface Ihome {
   handledit: (movie: IMovie) => void;
 }
@@ -12,17 +16,18 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
   const [refresh, setrefresh] = useState(false);
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [showmodal, setshowmodal] = useState(false);
+  // const [state, setState] = useState(false);
   const [showmodalmsg, setshowmodalmsg] = useState<IShowError>({
     action: "",
     msg: "",
   });
 
   const toggleModal = () => {
-    setshowmodal((prevshowModal) => !prevshowModal);
+    setshowmodal((prev) => !prev);
   };
   useEffect(() => {
     console.log("first called");
-    async function getMoviesfromApi() {
+    async function getMovieApi() {
       setisloading(true);
       try {
         const response = await getmovies();
@@ -33,7 +38,7 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
         setisloading(false);
       }
     }
-    getMoviesfromApi();
+    getMovieApi();
   }, [refresh]);
   async function handledelete(id: number) {
     toggleModal();
@@ -67,22 +72,29 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
           <Link to="/Add" role="button" className="secondary">
             +
           </Link>
-          <button
+          {/* <button
             disabled={isloading}
             onClick={() => setrefresh((prev) => !prev)}
           >
             refresh list
-          </button>
+          </button> */}
+          <Button
+            loading
+            disabled={isloading}
+            onClick={() => setrefresh((prev) => !prev)}
+          >
+            refresh list
+          </Button>
           {isloading ? (
             <p>Loading movies!</p>
           ) : (
-            <div className="card">
+            <div className="cards">
               {movies.map((m) => (
                 <article key={m.id}>
                   <h1>{m.title}</h1>
                   <h3>{m.year}</h3>
 
-                  <div className="card">
+                  <div className="cards">
                     <Link to={`/Edit/${m.id}`}>
                       <button onClick={() => handledit(m)}>Edit</button>
                     </Link>

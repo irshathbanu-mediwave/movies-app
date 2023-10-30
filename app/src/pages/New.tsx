@@ -35,7 +35,7 @@ function Addcard() {
   return (
     <>
       <Layout title="Addcard">
-        <h1>AddForm</h1>
+        <h1>AddMoviescard</h1>
         <form onSubmit={(e) => handleAddcard(e)}>
           <label htmlFor="title">
             Title

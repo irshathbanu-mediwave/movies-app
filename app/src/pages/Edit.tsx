@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { IMovie } from "../components/types";
+import { IMovie, IShowError } from "../components/types";
 import Layout from "../components/Layout";
 import { putmovies } from "../services/api";
 
@@ -9,6 +9,16 @@ interface IEditForm {
 }
 const Editcard: React.FC<IEditForm> = ({ movies }) => {
   const { id } = useParams();
+  const [isloading, setisloading] = useState(false);
+  const [refresh, setrefresh] = useState(false);
+  const [showmodal, setshowmodal] = useState(false);
+  const [showmodalmsg, setshowmodalmsg] = useState<IShowError>({
+    action: "",
+    msg: "",
+  });
+  const toggleModal = () => {
+    setshowmodal((prev) => !prev);
+  };
   const [editValues, seteditValue] = useState({
     title: movies.title,
     year: movies.year,
@@ -22,11 +32,22 @@ const Editcard: React.FC<IEditForm> = ({ movies }) => {
     seteditValue({ ...editValues, [name]: value });
   }
   async function handleEditcard() {
+    setisloading(true);
     try {
       const response = await putmovies(editValues, movies.id);
       console.log(response);
+      setshowmodalmsg({
+        action:"Successfuly edit card",
+        msg:"Added"
+      })
     } catch (error) {
+if (error instanceof Error){
+  
+}
+
       console.log(error);
+    } finally {
+      setisloading(false);
     }
   }
   return (
@@ -57,7 +78,7 @@ const Editcard: React.FC<IEditForm> = ({ movies }) => {
                 onChange={(e) => onChanges(e)}
               />
             </label>
-            <div className="grid">
+            <div className="cards">
               <Link to="/">
                 <button onClick={() => handleEditcard()}>add</button>
               </Link>
