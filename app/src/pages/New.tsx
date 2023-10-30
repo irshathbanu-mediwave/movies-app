@@ -1,6 +1,24 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import nav from "../components/Nav";
+import { useState } from "react";
+import {getmovies,deletemovies } from "../services/api";
 
 function Addmoviecard() {
+  const navigate = useNavigate();
+  const [movies, setMovies] = useState({
+    title: "",
+    year: 0,
+  });
+  async function handleaddMovies(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    try{
+      const Moviepayload={
+        title:movie.title,
+        year
+      }
+    }
+  }
   return (
     <>
       <div className="add-card">
