@@ -26,7 +26,7 @@ function Addcard() {
       console.log(error);
     }
   }
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChanges(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setMovies({ ...movies, [name]: value });
     console.log(movies);
@@ -44,7 +44,7 @@ function Addcard() {
               id="title"
               name="title"
               placeholder="Title"
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => onChanges(e)}
             />
           </label>
 
@@ -55,7 +55,7 @@ function Addcard() {
               id="year"
               name="year"
               placeholder="Year"
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => onChanges(e)}
             />
           </label>
           <button type="submit">add movie</button>

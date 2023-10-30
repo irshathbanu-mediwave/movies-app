@@ -17,7 +17,7 @@ const Editcard: React.FC<IEditForm> = ({ movies }) => {
   useEffect(() => {
     console.log("Getting info of ", id);
   }, [id]);
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChanges(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     seteditValue({ ...editValues, [name]: value });
   }
@@ -42,7 +42,7 @@ const Editcard: React.FC<IEditForm> = ({ movies }) => {
                 name="title"
                 value={editValues.title}
                 placeholder="Title"
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => onChanges(e)}
               />
             </label>
 
@@ -54,7 +54,7 @@ const Editcard: React.FC<IEditForm> = ({ movies }) => {
                 name="year"
                 value={editValues.year}
                 placeholder="Year"
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => onChanges(e)}
               />
             </label>
             <div className="grid">
