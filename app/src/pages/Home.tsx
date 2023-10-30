@@ -4,10 +4,11 @@ import "@picocss/pico";
 import { useEffect, useState } from "react";
 import { deletemovies, getmovies } from "../services/api";
 import Layout from "../components/Layout";
-import { Button } from "rsuite";
+// import { Button } from "rsuite";
 // Default CSS
-import "rsuite/dist/rsuite.min.css";
+// import "rsuite/dist/rsuite.min.css";
 // import { CLoadingButton } from '@coreui/react-pro';
+import icon from "../Loading/loading";
 interface Ihome {
   handledit: (movie: IMovie) => void;
 }
@@ -72,19 +73,21 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
           <Link to="/Add" role="button" className="secondary">
             +
           </Link>
-          {/* <button
+          <button
             disabled={isloading}
             onClick={() => setrefresh((prev) => !prev)}
           >
-            refresh list
-          </button> */}
-          <Button
+            {isloading ? <icon /> : <> refresh list</>}
+
+            {/* refresh list */}
+          </button>
+          {/* <Button
             loading
             disabled={isloading}
             onClick={() => setrefresh((prev) => !prev)}
           >
             refresh list
-          </Button>
+          </Button> */}
           {isloading ? (
             <p>Loading movies!</p>
           ) : (
