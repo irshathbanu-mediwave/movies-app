@@ -8,7 +8,8 @@ import Layout from "../components/Layout";
 // Default CSS
 // import "rsuite/dist/rsuite.min.css";
 // import { CLoadingButton } from '@coreui/react-pro';
-import icon from "../Loading/loading";
+// import icon from "../loading/loading";
+import loadingicon from "../loading/loading";
 interface Ihome {
   handledit: (movie: IMovie) => void;
 }
@@ -77,8 +78,8 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
             disabled={isloading}
             onClick={() => setrefresh((prev) => !prev)}
           >
-            {isloading ? <icon /> : <> refresh list</>}
-
+            <loadingicon />
+            {/* {isloading ? <loadingicon /> : <> refresh list</>} */}
             {/* refresh list */}
           </button>
           {/* <Button
