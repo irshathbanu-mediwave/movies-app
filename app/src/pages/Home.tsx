@@ -76,13 +76,13 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
           {isloading ? (
             <p>Loading movies!</p>
           ) : (
-            <div className="grid">
+            <div className="card">
               {movies.map((m) => (
                 <article key={m.id}>
                   <h1>{m.title}</h1>
                   <h3>{m.year}</h3>
 
-                  <div className="grid">
+                  <div className="card">
                     <Link to={`/Edit/${m.id}`}>
                       <button onClick={() => handledit(m)}>Edit</button>
                     </Link>
@@ -91,7 +91,7 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
                       <dialog open>
                         <article>
                           <a
-                            href="#close"
+                            href=""
                             aria-label="Close"
                             className="close"
                             data-target="modal-example"
