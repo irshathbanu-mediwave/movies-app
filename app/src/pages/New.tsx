@@ -1,41 +1,68 @@
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import nav from "../components/Nav";
+import Layout from "../components/Layout";
+import { postmovies } from "../services/api";
 import { useState } from "react";
-import {getmovies,deletemovies } from "../services/api";
 
-function Addmoviecard() {
+function Addcard() {
   const navigate = useNavigate();
   const [movies, setMovies] = useState({
     title: "",
     year: 0,
   });
-  async function handleaddMovies(e: React.FormEvent<HTMLFormElement>) {
+
+  async function handleAddcard(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    try{
-      const Moviepayload={
-        title:movie.title,
-        year
-      }
+    try {
+      const moviePayload = {
+        title: movies.title,
+        year: movies.year,
+      };
+      const response = await postmovies(moviePayload);
+
+      console.log(response);
+      navigate("/");
+    } catch (error) {
+      console.log("Errored");
+      console.log(error);
     }
   }
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setMovies({ ...movies, [name]: value });
+    console.log(movies);
+  }
+
   return (
     <>
-      <div className="add-card">
-        <h2> Add Movie-card</h2>
-        <form>
-          <label htmlFor="title">Enter the movie name:</label>
-          <input type="text" required placeholder="Enter the movie name" />
-          <label>Enter the movie year:</label>
-          <input type="text" required placeholder="Enter the year" />
+      <Layout title="Addcard">
+        <h1>AddForm</h1>
+        <form onSubmit={(e) => handleAddcard(e)}>
+          <label htmlFor="title">
+            Title
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Title"
+              onChange={(e) => handleChange(e)}
+            />
+          </label>
+
+          <label htmlFor="year">
+            Year
+            <input
+              type="number"
+              id="year"
+              name="year"
+              placeholder="Year"
+              onChange={(e) => handleChange(e)}
+            />
+          </label>
+          <button type="submit">add movie</button>
         </form>
-      </div>
-      <div className="add-btn">
-        <button className="contrast">
-          <Link to={"/Edit"}>Edit</Link>
-        </button>
-      </div>
+      </Layout>
     </>
   );
 }
-export default Addmoviecard;
+
+export default Addcard;
