@@ -80,7 +80,7 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
           <button disabled={isloading} onClick={() => setrefresh((p) => !p)}>
             {/* <loadingicon /> */}
             {isloading ? <Loadingicon /> : <> refresh list</>}
-            {/* refresh list */}
+            {/* refresh list  */}
           </button>
           {/* <Button
             loading
