@@ -31,3 +31,7 @@ npm start
 ```
 npm install react-router-dom
 ```
+##### For style add 
+```
+npm i @picocss/pico
+```
