@@ -4,20 +4,19 @@ import { IMovie, IShowError } from "../components/types";
 import Layout from "../components/Layout";
 import { putmovies } from "../services/api";
 
-interface IEditForm {
+interface IEditcard {
   movies: IMovie;
 }
-const Editcard: React.FC<IEditForm> = ({ movies }) => {
+const Editcard: React.FC<IEditcard> = ({ movies }) => {
   const { id } = useParams();
-  const [isloading, setisloading] = useState(false);
-  const [refresh, setrefresh] = useState(false);
+
   const [showmodal, setshowmodal] = useState(false);
   const [showmodalmsg, setshowmodalmsg] = useState<IShowError>({
     action: "",
     msg: "",
   });
-  const toggleModal = () => {
-    setshowmodal((prev) => !prev);
+  const togglemodal = () => {
+    setshowmodal((p) => !p);
   };
   const [editValues, seteditValue] = useState({
     title: movies.title,
@@ -31,30 +30,31 @@ const Editcard: React.FC<IEditForm> = ({ movies }) => {
     const { name, value } = e.target;
     seteditValue({ ...editValues, [name]: value });
   }
-  async function handleEditcard() {
-    setisloading(true);
+  async function handleEditcard(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    togglemodal();
     try {
       const response = await putmovies(editValues, movies.id);
       console.log(response);
       setshowmodalmsg({
-        action:"Successfuly edit card",
-        msg:"Added"
-      })
+        action: "Successfuly edit card",
+        msg: "edit",
+      });
     } catch (error) {
-if (error instanceof Error){
-  
-}
-
       console.log(error);
-    } finally {
-      setisloading(false);
     }
+  }
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+  }
+  function close() {
+    togglemodal();
   }
   return (
     <>
       <Layout title={`EditMovie${movies.title}`}>
         <main className="container">
-          <form>
+          <form onSubmit={(e) => onSubmit(e)}>
             <label htmlFor="title">
               Title
               <input
@@ -62,8 +62,9 @@ if (error instanceof Error){
                 id="title"
                 name="title"
                 value={editValues.title}
-                placeholder="Title"
+                placeholder=" Enter the Title"
                 onChange={(e) => onChanges(e)}
+                required
               />
             </label>
 
@@ -76,15 +77,31 @@ if (error instanceof Error){
                 value={editValues.year}
                 placeholder="Year"
                 onChange={(e) => onChanges(e)}
+                required
               />
             </label>
             <div className="cards">
               <Link to="/">
-                <button onClick={() => handleEditcard()}>add</button>
+                <button onClick={(e) => handleEditcard(e)}>add</button>
               </Link>
               <Link to="/">
                 <button>Cancel</button>
               </Link>
+              {showmodal && (
+                <dialog open>
+                  <article>
+                    <a
+                      href="/"
+                      aria-label="Close"
+                      className="close"
+                      data-target="example"
+                      onClick={close}
+                    ></a>
+                    <h4>{showmodalmsg.action}</h4>
+                    <p> {showmodalmsg.msg}</p>
+                  </article>
+                </dialog>
+              )}
             </div>
           </form>
         </main>

@@ -1,10 +1,10 @@
 import loading from "./loading.svg";
 
-function loadingicon() {
+function Loadingicon() {
   return (
     <>
       <img src={loading} alt="loading" className="loadingicon" />
     </>
   );
 }
-export default loadingicon;
+export default Loadingicon;

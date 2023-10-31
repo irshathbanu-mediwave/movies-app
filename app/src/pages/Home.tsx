@@ -9,7 +9,7 @@ import Layout from "../components/Layout";
 // import "rsuite/dist/rsuite.min.css";
 // import { CLoadingButton } from '@coreui/react-pro';
 // import icon from "../loading/loading";
-import loadingicon from "../loading/loading";
+import Loadingicon from "../loading/loading";
 interface Ihome {
   handledit: (movie: IMovie) => void;
 }
@@ -76,10 +76,10 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
           </Link>
           <button
             disabled={isloading}
-            onClick={() => setrefresh((prev) => !prev)}
+            onClick={() => setrefresh((p) => !p)}
           >
-            <loadingicon />
-            {/* {isloading ? <loadingicon /> : <> refresh list</>} */}
+            {/* <loadingicon /> */}
+            {isloading ? <Loadingicon /> : <> refresh list</>}
             {/* refresh list */}
           </button>
           {/* <Button
@@ -113,7 +113,7 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
                             data-target="modal-example"
                             onClick={toggleModal}
                           ></a>
-                          <h3>{showmodalmsg.action}</h3>
+                          <h4>{showmodalmsg.action}</h4>
                           <p>{showmodalmsg.msg}</p>
                         </article>
                       </dialog>

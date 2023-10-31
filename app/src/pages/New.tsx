@@ -1,28 +1,50 @@
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import { postmovies } from "../services/api";
+import { IShowError } from "../components/types";
 import { useState } from "react";
 
 function Addcard() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [movies, setMovies] = useState({
     title: "",
     year: 0,
   });
+  const [showmodal, setshowmodal] = useState(false);
+  const [showmodalmsg, setshowmodalmsg] = useState<IShowError>({
+    action: "",
+    msg: "",
+  });
+  const togglemodal = () => {
+    setshowmodal((p) => !p);
+  };
+  function close() {
+    togglemodal();
+  }
 
   async function handleAddcard(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    togglemodal();
     try {
-      const moviePayload = {
+      const movieload = {
         title: movies.title,
         year: movies.year,
       };
-      const response = await postmovies(moviePayload);
-
+      const response = await postmovies(movieload);
       console.log(response);
-      navigate("/");
+      setshowmodalmsg({
+        action: "Successfully add card ",
+        msg: "added",
+      });
     } catch (error) {
-      console.log("Errored");
+      if (error instanceof Error) {
+        console.error("Error adding movie:", error);
+        setshowmodalmsg({
+          action: "Failed",
+          msg: error.message,
+        });
+      }
+
       console.log(error);
     }
   }
@@ -43,8 +65,9 @@ function Addcard() {
               type="text"
               id="title"
               name="title"
-              placeholder="Title"
+              placeholder="Enter the Title"
               onChange={(e) => onChanges(e)}
+              required
             />
           </label>
 
@@ -54,11 +77,28 @@ function Addcard() {
               type="number"
               id="year"
               name="year"
-              placeholder="Year"
+              placeholder="Enter the  year"
               onChange={(e) => onChanges(e)}
+              required
             />
           </label>
+
           <button type="submit">add movie</button>
+          {showmodal && (
+            <dialog open>
+              <article>
+                <a
+                  href="/"
+                  aria-label="Close"
+                  className="close"
+                  data-target="example"
+                  onClick={close}
+                ></a>
+                <h4>{showmodalmsg.action}</h4>
+                <p> {showmodalmsg.msg}</p>
+              </article>
+            </dialog>
+          )}
         </form>
       </Layout>
     </>
