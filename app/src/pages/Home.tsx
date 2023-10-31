@@ -15,6 +15,7 @@ interface Ihome {
 }
 const Home: React.FC<Ihome> = ({ handledit }) => {
   const [isloading, setisloading] = useState(false);
+  // const [isloadings, setisloadings] = useState(false);
   const [refresh, setrefresh] = useState(false);
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [showmodal, setshowmodal] = useState(false);
@@ -31,6 +32,7 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
     console.log("first called");
     async function getMovieApi() {
       setisloading(true);
+      // setisloadings(true);
       try {
         const response = await getmovies();
         setMovies(response.data);
@@ -38,6 +40,7 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
         console.log(error);
       } finally {
         setisloading(false);
+        // setisloadings(false);
       }
     }
     getMovieApi();
@@ -74,10 +77,7 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
           <Link to="/Add" role="button" className="secondary">
             +
           </Link>
-          <button
-            disabled={isloading}
-            onClick={() => setrefresh((p) => !p)}
-          >
+          <button disabled={isloading} onClick={() => setrefresh((p) => !p)}>
             {/* <loadingicon /> */}
             {isloading ? <Loadingicon /> : <> refresh list</>}
             {/* refresh list */}
@@ -92,7 +92,7 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
           {isloading ? (
             <p>Loading movies!</p>
           ) : (
-            <div className="cards">
+            <div className="card">
               {movies.map((m) => (
                 <article key={m.id}>
                   <h1>{m.title}</h1>
@@ -102,12 +102,17 @@ const Home: React.FC<Ihome> = ({ handledit }) => {
                     <Link to={`/Edit/${m.id}`}>
                       <button onClick={() => handledit(m)}>Edit</button>
                     </Link>
-                    <button onClick={() => handledelete(m.id)}>delete</button>
+                    <button
+                      disabled={isloading}
+                      onClick={() => handledelete(m.id)}
+                    >
+                      {isloading ? <Loadingicon /> : <> delete</>}
+                    </button>
                     {showmodal && (
                       <dialog open>
                         <article>
                           <a
-                            href=""
+                            href="/"
                             aria-label="Close"
                             className="close"
                             data-target="modal-example"

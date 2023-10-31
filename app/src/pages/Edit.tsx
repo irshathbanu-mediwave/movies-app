@@ -53,7 +53,7 @@ const Editcard: React.FC<IEditcard> = ({ movies }) => {
   return (
     <>
       <Layout title={`EditMovie${movies.title}`}>
-        <main className="container">
+        <main className="containers">
           <form onSubmit={(e) => onSubmit(e)}>
             <label htmlFor="title">
               Title

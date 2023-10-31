@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+
 import Layout from "../components/Layout";
 import { postmovies } from "../services/api";
 import { IShowError } from "../components/types";
@@ -65,7 +65,7 @@ function Addcard() {
               type="text"
               id="title"
               name="title"
-              placeholder="Enter the Title"
+              placeholder="Enter the title"
               onChange={(e) => onChanges(e)}
               required
             />
@@ -89,7 +89,7 @@ function Addcard() {
               <article>
                 <a
                   href="/"
-                  aria-label="Close"
+                  aria-label="close"
                   className="close"
                   data-target="example"
                   onClick={close}
